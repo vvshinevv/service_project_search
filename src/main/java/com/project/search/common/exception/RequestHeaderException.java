@@ -1,4 +1,4 @@
-package com.project.common.exception;
+package com.project.search.common.exception;
 
 public class RequestHeaderException extends RuntimeException {
     public RequestHeaderException(String message) {
