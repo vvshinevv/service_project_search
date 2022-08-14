@@ -1,6 +1,7 @@
 package com.project.search.local.domain;
 
 import lombok.Getter;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,5 +22,20 @@ public class LocalSearchContainers {
                 }
             }
         }
+    }
+
+    public List<LocalSearch> mergeLocalSearch() {
+        List<LocalSearch> results = new ArrayList<>();
+        for (LocalSearchContainer container : containers) {
+            if (CollectionUtils.isEmpty(results)) {
+                results.addAll(container.getItems());
+            } else {
+                List<LocalSearch> differentLocalSearch = container.findDifferentLocalSearch(results);
+                results.addAll(differentLocalSearch);
+
+            }
+        }
+
+        return results;
     }
 }

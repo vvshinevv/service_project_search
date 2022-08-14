@@ -7,14 +7,11 @@ import com.project.search.local.infra.kakao.model.LocalSearchKakaoContainerRespo
 import com.project.search.local.infra.kakao.model.LocalSearchKakaoRequest;
 import com.project.search.local.infra.kakao.model.SortType;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Order(Ordered.HIGHEST_PRECEDENCE)
 @Component
 public class LocalSearchKakaoFinder implements LocalSearchFinder {
     private final LocalSearchKakaoClient localSearchKakaoClient;

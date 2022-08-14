@@ -2,6 +2,7 @@ package com.project.search.local.infra.kakao.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.project.search.local.domain.LocalSearch;
+import com.project.search.local.domain.SearchType;
 import lombok.Getter;
 
 @Getter
@@ -22,6 +23,6 @@ public class LocalSearchKakaoResponse {
     }
 
     public LocalSearch toDomain() {
-        return new LocalSearch(addressName, roadAddressName, placeName, placeUrl);
+        return new LocalSearch(addressName, roadAddressName, placeName, placeUrl, SearchType.KAKAO);
     }
 }
