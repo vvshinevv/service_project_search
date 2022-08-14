@@ -15,10 +15,13 @@ public class LocalSearchNaverResponse {
     @JsonProperty("title")
     private String title;
 
+    @JsonProperty("link")
+    private String link;
+
     protected LocalSearchNaverResponse() {
     }
 
     public LocalSearch toDomain() {
-        return new LocalSearch(address, roadAddress, title);
+        return new LocalSearch(address, roadAddress, title, link);
     }
 }

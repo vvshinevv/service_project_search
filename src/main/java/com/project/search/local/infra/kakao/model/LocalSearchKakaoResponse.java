@@ -15,10 +15,13 @@ public class LocalSearchKakaoResponse {
     @JsonProperty("place_name")
     private String placeName;
 
+    @JsonProperty("place_url")
+    private String placeUrl;
+
     protected LocalSearchKakaoResponse() {
     }
 
     public LocalSearch toDomain() {
-        return new LocalSearch(addressName, roadAddressName, placeName);
+        return new LocalSearch(addressName, roadAddressName, placeName, placeUrl);
     }
 }

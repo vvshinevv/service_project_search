@@ -3,6 +3,7 @@ package com.project.search.local.infra.naver.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.project.search.common.util.Streams;
 import com.project.search.local.domain.LocalSearchContainer;
+import com.project.search.local.domain.SearchType;
 import lombok.Getter;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class LocalSearchNaverContainerResponse {
 
     public LocalSearchContainer toDomain() {
         return new LocalSearchContainer(
+                SearchType.NAVER,
                 Streams.ofNullable(localSearchNaverResponses).map(LocalSearchNaverResponse::toDomain).collect(Collectors.toList()),
                 total == display
         );
