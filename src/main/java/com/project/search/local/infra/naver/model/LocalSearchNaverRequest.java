@@ -5,17 +5,17 @@ import lombok.Getter;
 @Getter
 public class LocalSearchNaverRequest {
     private String query;
-    private int display;
     private int start;
+    private int display;
     private SortType sort;
 
     protected LocalSearchNaverRequest() {
     }
 
-    public LocalSearchNaverRequest(String query, int display, int start, SortType sort) {
+    public LocalSearchNaverRequest(String query, int start, int display, SortType sort) {
         this.query = query;
-        this.display = display;
         this.start = start;
+        this.display = display;
         this.sort = sort;
     }
 }

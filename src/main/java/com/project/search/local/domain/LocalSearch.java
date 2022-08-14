@@ -12,6 +12,7 @@ public class LocalSearch {
     private String roadAddressName;
     private String placeName;
     private String placeUrl;
+
     private SearchType searchType;
     private int originalOrder;
     private Score score;

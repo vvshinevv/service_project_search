@@ -26,10 +26,12 @@ public class LocalSearchNaverContainerResponse {
     protected LocalSearchNaverContainerResponse() {
     }
 
-    public LocalSearchContainer toDomain() {
+    public LocalSearchContainer toDomain(int page, int size) {
         return new LocalSearchContainer(
                 SearchType.NAVER,
                 Streams.ofNullable(localSearchNaverResponses).map(LocalSearchNaverResponse::toDomain).collect(Collectors.toList()),
+                page,
+                size,
                 total == display
         );
     }

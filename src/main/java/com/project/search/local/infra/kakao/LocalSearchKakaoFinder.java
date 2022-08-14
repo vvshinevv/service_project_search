@@ -22,9 +22,19 @@ public class LocalSearchKakaoFinder implements LocalSearchFinder {
 
     @Override
     @Retryable(value = LocalSearchClientException.class, maxAttempts = 2, backoff = @Backoff(delay = 500))
-    public LocalSearchContainer findLocalSearchByKeyword(String keyword) {
-        LocalSearchKakaoRequest request = new LocalSearchKakaoRequest(keyword, 1, 15, SortType.ACCURACY);
+    public LocalSearchContainer findLocalSearchByKeyword(String keyword, int page, int size) {
+        LocalSearchKakaoRequest request = new LocalSearchKakaoRequest(keyword, page, size, SortType.ACCURACY);
         LocalSearchKakaoContainerResponse response = localSearchKakaoClient.searchLocalByKeyWord(request);
-        return response.toDomain();
+        return response.toDomain(page, size);
+    }
+
+    @Override
+    public int defaultPage() {
+        return 1;
+    }
+
+    @Override
+    public int defaultSize() {
+        return 15;
     }
 }

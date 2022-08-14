@@ -19,6 +19,6 @@ public class LocalSearchNaverFinderTest {
     @DisplayName("네이버_오픈_API를_활용하여_키워드로_장소_검색_테스트()")
     @Test
     void 네이버_오픈_API를_활용하여_키워드로_장소_검색_테스트() {
-        localSearchNaverFinder.findLocalSearchByKeyword("카카오 아지트");
+        localSearchNaverFinder.findLocalSearchByKeyword("카카오 아지트", 1, 5);
     }
 }

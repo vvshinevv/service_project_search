@@ -22,9 +22,19 @@ public class LocalSearchNaverFinder implements LocalSearchFinder {
 
     @Override
     @Retryable(value = LocalSearchClientException.class, maxAttempts = 2, backoff = @Backoff(delay = 500))
-    public LocalSearchContainer findLocalSearchByKeyword(String keyword) {
-        LocalSearchNaverRequest request = new LocalSearchNaverRequest(keyword, 5, 1, SortType.RANDOM);
+    public LocalSearchContainer findLocalSearchByKeyword(String keyword, int page, int size) {
+        LocalSearchNaverRequest request = new LocalSearchNaverRequest(keyword, page, size, SortType.RANDOM);
         LocalSearchNaverContainerResponse response = localSearchNaverClient.searchLocalByKeyWord(request);
-        return response.toDomain();
+        return response.toDomain(page, size);
+    }
+
+    @Override
+    public int defaultPage() {
+        return 1;
+    }
+
+    @Override
+    public int defaultSize() {
+        return 5;
     }
 }

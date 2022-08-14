@@ -10,14 +10,18 @@ import java.util.stream.IntStream;
 public class LocalSearchContainer {
     private SearchType searchType;
     private List<LocalSearch> items;
+    private int page;
+    private int size;
     private boolean isEnd;
 
     protected LocalSearchContainer() {
     }
 
-    public LocalSearchContainer(SearchType searchType, List<LocalSearch> items, boolean isEnd) {
+    public LocalSearchContainer(SearchType searchType, List<LocalSearch> items, int page, int size, boolean isEnd) {
         this.searchType = searchType;
         this.items = items;
+        this.page = page;
+        this.size = size;
         this.isEnd = isEnd;
         IntStream.range(0, items.size()).forEach(i -> items.get(i).determineOrder(i));
     }
@@ -33,16 +37,6 @@ public class LocalSearchContainer {
         }
     }
 
-    public boolean isContainSimilarLocalSearch(LocalSearch target) {
-        for (LocalSearch item : items) {
-            if (item.isSimilar(target)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public List<LocalSearch> findDifferentLocalSearch(List<LocalSearch> targets) {
         List<LocalSearch> results = new ArrayList<>(targets);
         for (LocalSearch item : items) {
@@ -52,7 +46,6 @@ public class LocalSearchContainer {
                 }
             }
         }
-
         return results;
     }
 }

@@ -32,7 +32,6 @@ public class LocalSearchContainers {
             } else {
                 List<LocalSearch> differentLocalSearch = container.findDifferentLocalSearch(results);
                 results.addAll(differentLocalSearch);
-
             }
         }
 

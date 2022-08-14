@@ -2,7 +2,7 @@ package com.project.search.local.domain;
 
 import java.util.Objects;
 
-public class Score {
+public class Score implements Comparable<Score> {
     private final int value;
 
     public Score(int value) {
@@ -24,5 +24,10 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public int compareTo(Score o) {
+        return value - o.value;
     }
 }
