@@ -1,5 +1,6 @@
 package com.project.search.local.application;
 
+import com.project.search.common.event.Events;
 import com.project.search.common.util.Streams;
 import com.project.search.local.application.dto.LocalSearchSummary;
 import com.project.search.local.application.dto.LocalSearchesSummary;
@@ -7,6 +8,7 @@ import com.project.search.local.domain.AnalogyMeasurement;
 import com.project.search.local.domain.LocalSearch;
 import com.project.search.local.domain.LocalSearchContainer;
 import com.project.search.local.domain.LocalSearchContainers;
+import com.project.search.count.command.domain.SearchCountEvent;
 import com.project.search.local.domain.LocalSearchFinder;
 import com.project.search.local.domain.comparator.OriginalOrderComparator;
 import com.project.search.local.domain.comparator.ScoreComparator;
@@ -30,10 +32,10 @@ public class LocalSearchService {
         this.analogyMeasurement = analogyMeasurement;
     }
 
-    public LocalSearchesSummary searchLocalByKeyWord(final String keyWord) {
+    public LocalSearchesSummary searchLocalByKeyWord(final String keyword) {
         // 카카오 네이버 오픈 API를 통해 데이터를 가져옴
         List<LocalSearchContainer> collect = localSearchFinders.stream()
-                .map(i -> i.findLocalSearchByKeyword(keyWord, i.defaultPage(), i.defaultSize()))
+                .map(i -> i.findLocalSearchByKeyword(keyword, i.defaultPage(), i.defaultSize()))
                 .collect(Collectors.toList());
         LocalSearchContainers containers = new LocalSearchContainers(collect);
 
@@ -43,6 +45,9 @@ public class LocalSearchService {
 
         // 우선 순위에 따른 정렬
         mergedLocalSearch.sort(new SearchTypeComparator().thenComparing(new ScoreComparator()).thenComparing(new OriginalOrderComparator()));
+
+        // 검색어 조회수 이벤트 발행
+        Events.raise(new SearchCountEvent(keyword));
         return new LocalSearchesSummary(toSummary(mergedLocalSearch));
     }
 

@@ -4,10 +4,10 @@ import lombok.Getter;
 
 @Getter
 public class LocalSearchSummary {
-    private String addressName;
-    private String roadAddressName;
-    private String placeName;
-    private String placeUrl;
+    private final String addressName;
+    private final String roadAddressName;
+    private final String placeName;
+    private final String placeUrl;
 
     public LocalSearchSummary(String addressName, String roadAddressName, String placeName, String placeUrl) {
         this.addressName = addressName;

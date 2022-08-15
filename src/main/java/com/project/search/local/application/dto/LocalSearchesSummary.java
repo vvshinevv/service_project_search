@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocalSearchesSummary {
-    private List<LocalSearchSummary> items;
+    private final List<LocalSearchSummary> items;
 
     public LocalSearchesSummary(List<LocalSearchSummary> items) {
         this.items = new ArrayList<>(items);
