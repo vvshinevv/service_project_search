@@ -2,12 +2,25 @@ package com.project.search.local.domain;
 
 import lombok.Getter;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
+@Entity
+@Table(name = "local_search")
 public class LocalSearch {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "local_search_id")
+    private Long id;
+
     private String addressName;
     private String roadAddressName;
     private String placeName;
@@ -16,7 +29,7 @@ public class LocalSearch {
     private SearchType searchType;
     private int originalOrder;
     private Score score;
-    private List<LocalSearch> similarities = new ArrayList<>();
+    private final List<LocalSearch> similarities = new ArrayList<>();
 
     protected LocalSearch() {
     }

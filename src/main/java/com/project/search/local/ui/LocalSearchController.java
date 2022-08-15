@@ -1,6 +1,5 @@
 package com.project.search.local.ui;
 
-import com.project.search.common.event.Events;
 import com.project.search.local.application.LocalSearchService;
 import com.project.search.local.application.dto.LocalSearchesSummary;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class LocalSearchController {
     public ResponseEntity<LocalSearchesSummary> searchLocalWithKeyword(
             @RequestParam(value = "keyword") String keyword
     ) {
-        LocalSearchesSummary localSearchesSummary = localSearchService.searchLocalByKeyWord(keyword);
+        LocalSearchesSummary localSearchesSummary = localSearchService.searchLocalByKeyword(keyword);
         return ResponseEntity.ok().body(localSearchesSummary);
     }
 }
