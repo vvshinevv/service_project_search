@@ -25,7 +25,7 @@ public class LocalSearchKakaoFinder implements LocalSearchFinder {
     public LocalSearchContainer findLocalSearchByKeyword(String keyword, int page, int size) {
         LocalSearchKakaoRequest request = new LocalSearchKakaoRequest(keyword, page, size, SortType.ACCURACY);
         LocalSearchKakaoContainerResponse response = localSearchKakaoClient.searchLocalByKeyWord(request);
-        return response.toDomain(page, size);
+        return response.toDomain(keyword, page, size);
     }
 
     @Override

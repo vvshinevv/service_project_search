@@ -3,8 +3,8 @@ package com.project.search.local.application;
 import com.project.search.common.event.Events;
 import com.project.search.common.util.Streams;
 import com.project.search.count.command.domain.SearchCountEvent;
-import com.project.search.local.application.dto.LocalSearchSaveDto;
 import com.project.search.local.application.dto.LocalSearchSummary;
+import com.project.search.local.application.dto.LocalSearchesSaveDto;
 import com.project.search.local.application.dto.LocalSearchesSummary;
 import com.project.search.local.application.exception.LocalSearchClientException;
 import com.project.search.local.domain.AnalogyMeasurement;
@@ -43,6 +43,8 @@ public class LocalSearchService {
         } catch (LocalSearchClientException exception) {
 
         }
+
+        return null;
     }
 
     public LocalSearchesSummary searchLocalByKeyword(final String keyword) {
@@ -66,23 +68,17 @@ public class LocalSearchService {
 
         // 검색어 조회수 이벤트 발행
         Events.raise(new SearchCountEvent(keyword));
-        LocalSearchesSummary localSearchesSummary = new LocalSearchesSummary(toSummary(results));
+        LocalSearchesSummary localSearchesSummary = new LocalSearchesSummary(keyword, toSummary(results));
 
         // failover를 위한 DB 저장 이벤트 발행
-        Events.raise(new LocalSearchSaveEvent(keyword, localSearchesSummary));
+        Events.raise(new LocalSearchSaveEvent(localSearchesSummary));
 
         return localSearchesSummary;
     }
 
     private List<LocalSearchSummary> toSummary(List<LocalSearch> localSearches) {
         return Streams.ofNullable(localSearches)
-                .map(i -> new LocalSearchSummary(i.getAddressName(), i.getRoadAddressName(), i.getPlaceName(), i.getPlaceUrl()))
+                .map(i -> new LocalSearchSummary(i.getAddressName(), i.getRoadAddressName(), i.getPlaceName(), i.getPlaceUrl(), i.getSearchType().name()))
                 .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public void saveLocalSearch(LocalSearchSaveDto localSearchSaveDto) {
-
-
     }
 }

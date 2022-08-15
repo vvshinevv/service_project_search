@@ -22,7 +22,7 @@ public class LocalSearchNaverResponse {
     protected LocalSearchNaverResponse() {
     }
 
-    public LocalSearch toDomain() {
-        return new LocalSearch(address, roadAddress, title, link, SearchType.NAVER);
+    public LocalSearch toDomain(String keyword) {
+        return new LocalSearch(keyword, address, roadAddress, title, link, SearchType.NAVER);
     }
 }

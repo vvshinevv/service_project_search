@@ -22,7 +22,7 @@ public class LocalSearchKakaoResponse {
     protected LocalSearchKakaoResponse() {
     }
 
-    public LocalSearch toDomain() {
-        return new LocalSearch(addressName, roadAddressName, placeName, placeUrl, SearchType.KAKAO);
+    public LocalSearch toDomain(String keyword) {
+        return new LocalSearch(keyword, addressName, roadAddressName, placeName, placeUrl, SearchType.KAKAO);
     }
 }

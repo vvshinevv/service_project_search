@@ -4,10 +4,13 @@ import lombok.Getter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,20 +24,39 @@ public class LocalSearch {
     @Column(name = "local_search_id")
     private Long id;
 
+    @Column(name = "keyword")
+    private String keyword;
+
+    @Column(name = "address_name")
     private String addressName;
+
+    @Column(name = "road_address_name")
     private String roadAddressName;
+
+    @Column(name = "place_name")
     private String placeName;
+
+    @Column(name = "place_url")
     private String placeUrl;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "saerch_type")
     private SearchType searchType;
+
+    @Transient
     private int originalOrder;
+
+    @Transient
     private Score score;
+
+    @Transient
     private final List<LocalSearch> similarities = new ArrayList<>();
 
     protected LocalSearch() {
     }
 
-    public LocalSearch(String addressName, String roadAddressName, String placeName, String placeUrl, SearchType searchType) {
+    public LocalSearch(String keyword, String addressName, String roadAddressName, String placeName, String placeUrl, SearchType searchType) {
+        this.keyword = keyword;
         this.addressName = addressName;
         this.roadAddressName = roadAddressName;
         this.placeName = placeName;
@@ -64,11 +86,11 @@ public class LocalSearch {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LocalSearch that = (LocalSearch) o;
-        return Objects.equals(getAddressName(), that.getAddressName()) && Objects.equals(getRoadAddressName(), that.getRoadAddressName()) && Objects.equals(getPlaceName(), that.getPlaceName()) && Objects.equals(getPlaceUrl(), that.getPlaceUrl()) && getSearchType() == that.getSearchType();
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAddressName(), getRoadAddressName(), getPlaceName(), getPlaceUrl(), getSearchType());
+        return Objects.hash(getId());
     }
 }

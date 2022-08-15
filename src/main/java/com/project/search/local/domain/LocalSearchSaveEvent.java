@@ -5,11 +5,9 @@ import lombok.Getter;
 
 @Getter
 public class LocalSearchSaveEvent {
-    private final String keyword;
     private final LocalSearchesSummary localSearchesSummary;
 
-    public LocalSearchSaveEvent(String keyword, LocalSearchesSummary localSearchesSummary) {
-        this.keyword = keyword;
+    public LocalSearchSaveEvent(LocalSearchesSummary localSearchesSummary) {
         this.localSearchesSummary = localSearchesSummary;
     }
 }

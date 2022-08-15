@@ -19,10 +19,10 @@ public class LocalSearchKakaoContainerResponse {
     protected LocalSearchKakaoContainerResponse() {
     }
 
-    public LocalSearchContainer toDomain(int page, int size) {
+    public LocalSearchContainer toDomain(String keyword, int page, int size) {
         return new LocalSearchContainer(
                 SearchType.KAKAO,
-                Streams.ofNullable(localSearchKakaoResponses).map(LocalSearchKakaoResponse::toDomain).collect(Collectors.toList()),
+                Streams.ofNullable(localSearchKakaoResponses).map(i -> i.toDomain(keyword)).collect(Collectors.toList()),
                 page,
                 size,
                 meta.isEnd()

@@ -25,7 +25,7 @@ public class LocalSearchNaverFinder implements LocalSearchFinder {
     public LocalSearchContainer findLocalSearchByKeyword(String keyword, int page, int size) {
         LocalSearchNaverRequest request = new LocalSearchNaverRequest(keyword, page, size, SortType.RANDOM);
         LocalSearchNaverContainerResponse response = localSearchNaverClient.searchLocalByKeyWord(request);
-        return response.toDomain(page, size);
+        return response.toDomain(keyword, page, size);
     }
 
     @Override

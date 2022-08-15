@@ -4,17 +4,18 @@ import lombok.Getter;
 
 @Getter
 public class LocalSearchSaveDto {
-    private final String keyword;
-    private final String addressName;
-    private final String roadAddressName;
-    private final String placeName;
-    private final String placeUrl;
+    private String addressName;
+    private String roadAddressName;
+    private String placeName;
+    private String placeUrl;
+    private String searchType;
 
-    public LocalSearchSaveDto(String keyword, String addressName, String roadAddressName, String placeName, String placeUrl) {
-        this.keyword = keyword;
+
+    public LocalSearchSaveDto(String addressName, String roadAddressName, String placeName, String placeUrl, String searchType) {
         this.addressName = addressName;
         this.roadAddressName = roadAddressName;
         this.placeName = placeName;
         this.placeUrl = placeUrl;
+        this.searchType = searchType;
     }
 }
