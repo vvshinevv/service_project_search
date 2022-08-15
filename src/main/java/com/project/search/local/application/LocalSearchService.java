@@ -4,7 +4,6 @@ import com.project.search.common.event.Events;
 import com.project.search.common.util.Streams;
 import com.project.search.count.command.domain.SearchCountEvent;
 import com.project.search.local.application.dto.LocalSearchSummary;
-import com.project.search.local.application.dto.LocalSearchesSaveDto;
 import com.project.search.local.application.dto.LocalSearchesSummary;
 import com.project.search.local.application.exception.LocalSearchClientException;
 import com.project.search.local.domain.AnalogyMeasurement;
@@ -12,6 +11,7 @@ import com.project.search.local.domain.LocalSearch;
 import com.project.search.local.domain.LocalSearchContainer;
 import com.project.search.local.domain.LocalSearchContainers;
 import com.project.search.local.domain.LocalSearchFinder;
+import com.project.search.local.domain.LocalSearchRepository;
 import com.project.search.local.domain.LocalSearchSaveEvent;
 import com.project.search.local.domain.comparator.OriginalOrderComparator;
 import com.project.search.local.domain.comparator.ScoreComparator;
@@ -27,13 +27,16 @@ import java.util.stream.Collectors;
 public class LocalSearchService {
     private final List<LocalSearchFinder> localSearchFinders;
     private final AnalogyMeasurement analogyMeasurement;
+    private final LocalSearchRepository localSearchRepository;
 
     public LocalSearchService(
             List<LocalSearchFinder> localSearchFinders,
-            @Qualifier("simpleAnalogyMeasurement") AnalogyMeasurement analogyMeasurement
+            @Qualifier("simpleAnalogyMeasurement") AnalogyMeasurement analogyMeasurement,
+            LocalSearchRepository localSearchRepository
     ) {
         this.localSearchFinders = localSearchFinders;
         this.analogyMeasurement = analogyMeasurement;
+        this.localSearchRepository = localSearchRepository;
     }
 
     @Transactional
@@ -41,10 +44,12 @@ public class LocalSearchService {
         try {
             return searchLocalByKeyword(keyword);
         } catch (LocalSearchClientException exception) {
+            List<LocalSearch> localSearches = Streams.ofNullable(localSearchRepository.findLocalSearchByKeyword(keyword))
+                    .limit(10)
+                    .collect(Collectors.toList());
 
+            return new LocalSearchesSummary(keyword, toSummary(localSearches));
         }
-
-        return null;
     }
 
     public LocalSearchesSummary searchLocalByKeyword(final String keyword) {

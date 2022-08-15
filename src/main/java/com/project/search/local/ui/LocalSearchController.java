@@ -19,7 +19,7 @@ public class LocalSearchController {
     public ResponseEntity<LocalSearchesSummary> searchLocalWithKeyword(
             @RequestParam(value = "keyword") String keyword
     ) {
-        LocalSearchesSummary localSearchesSummary = localSearchService.searchLocalByKeyword(keyword);
+        LocalSearchesSummary localSearchesSummary = localSearchService.searchLocalByKeywordWithFailover(keyword);
         return ResponseEntity.ok().body(localSearchesSummary);
     }
 }
