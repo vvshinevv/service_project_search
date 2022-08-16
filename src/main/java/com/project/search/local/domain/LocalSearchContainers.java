@@ -18,7 +18,7 @@ public class LocalSearchContainers {
         for (LocalSearchContainer outerContainer : containers) {
             for (LocalSearchContainer innerContainer : containers) {
                 if (outerContainer.getSearchType() != innerContainer.getSearchType()) {
-                    outerContainer.decideScoreWithAnalogyMeasurement(outerContainer.getItems(), analogyMeasurement);
+                    outerContainer.decideScoreWithAnalogyMeasurement(innerContainer.getItems(), analogyMeasurement);
                 }
             }
         }
@@ -30,7 +30,7 @@ public class LocalSearchContainers {
             if (CollectionUtils.isEmpty(results)) {
                 results.addAll(container.getItems());
             } else {
-                List<LocalSearch> differentLocalSearch = container.findDifferentLocalSearch(results);
+                List<LocalSearch> differentLocalSearch = container.findNotAnalogyDocuments();
                 results.addAll(differentLocalSearch);
             }
         }

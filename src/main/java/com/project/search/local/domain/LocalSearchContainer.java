@@ -23,7 +23,7 @@ public class LocalSearchContainer {
         this.page = page;
         this.size = size;
         this.isEnd = isEnd;
-        IntStream.range(0, items.size()).forEach(i -> items.get(i).determineOrder(i));
+        IntStream.range(0, items.size()).forEach(i -> items.get(i).determineOriginalOrder(i));
     }
 
     public void decideScoreWithAnalogyMeasurement(List<LocalSearch> targets, AnalogyMeasurement analogyMeasurement) {
@@ -31,19 +31,16 @@ public class LocalSearchContainer {
             for (LocalSearch target : targets) {
                 if (analogyMeasurement.measureAnalogy(item, target)) {
                     item.increaseScore();
-                    item.addSimilarLocalSearch(target);
                 }
             }
         }
     }
 
-    public List<LocalSearch> findDifferentLocalSearch(List<LocalSearch> targets) {
-        List<LocalSearch> results = new ArrayList<>(targets);
+    public List<LocalSearch> findNotAnalogyDocuments() {
+        List<LocalSearch> results = new ArrayList<>();
         for (LocalSearch item : items) {
-            for (LocalSearch result : results) {
-                if (!result.isSimilar(item)) {
-                    results.add(item);
-                }
+            if (item.getScore().equals(new Score(0))) {
+                results.add(item);
             }
         }
         return results;

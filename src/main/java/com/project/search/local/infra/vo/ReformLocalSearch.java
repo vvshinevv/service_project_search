@@ -17,6 +17,14 @@ public class ReformLocalSearch {
         this.placeName = placeName;
     }
 
+    public static ReformLocalSearch toVo(LocalSearch localSearch) {
+        return new ReformLocalSearch(
+                localSearch.getAddressName(),
+                localSearch.getRoadAddressName(),
+                localSearch.getPlaceName()
+        );
+    }
+
     public static ReformLocalSearch of(LocalSearch localSearch) {
         return new ReformLocalSearch(
                 reform(localSearch.getAddressName()),

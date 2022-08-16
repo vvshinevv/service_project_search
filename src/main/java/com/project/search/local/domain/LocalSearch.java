@@ -11,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -49,9 +47,6 @@ public class LocalSearch {
     @Transient
     private Score score;
 
-    @Transient
-    private final List<LocalSearch> similarities = new ArrayList<>();
-
     protected LocalSearch() {
     }
 
@@ -65,20 +60,12 @@ public class LocalSearch {
         this.score = new Score(0);
     }
 
-    public void determineOrder(int order) {
+    public void determineOriginalOrder(int order) {
         this.originalOrder = order;
     }
 
     public void increaseScore() {
         this.score = score.increase(1);
-    }
-
-    public void addSimilarLocalSearch(LocalSearch similar) {
-        this.similarities.add(similar);
-    }
-
-    public boolean isSimilar(LocalSearch localSearch) {
-        return this.similarities.contains(localSearch);
     }
 
     @Override
