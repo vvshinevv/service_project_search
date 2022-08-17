@@ -9,6 +9,7 @@ import com.project.search.local.application.dto.LocalSearchesSummary;
 import com.project.search.local.domain.LocalSearchSaveEvent;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.List;
@@ -23,7 +24,10 @@ public class LocalSearchSaveEventHandler {
     }
 
     @Async
-    @TransactionalEventListener(classes = LocalSearchSaveEvent.class)
+    @TransactionalEventListener(
+            classes = LocalSearchSaveEvent.class,
+            phase = TransactionPhase.AFTER_COMMIT
+    )
     public void handler(LocalSearchSaveEvent localSearchSaveEvent) {
         localSearchSaveService.saveLocalSearch(toDto(localSearchSaveEvent));
     }

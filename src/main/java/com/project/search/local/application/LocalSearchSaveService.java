@@ -10,6 +10,7 @@ import com.project.search.local.domain.SearchType;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class LocalSearchSaveService {
 
     public LocalSearchSaveService(
             LocalSearchRepository localSearchRepository,
-            @Qualifier("simpleAnalogyMeasurement") AnalogyMeasurement analogyMeasurement) {
+            @Qualifier(value = "ETRIAnalogyMeasurement") AnalogyMeasurement analogyMeasurement) {
         this.localSearchRepository = localSearchRepository;
         this.analogyMeasurement = analogyMeasurement;
     }
@@ -30,13 +31,18 @@ public class LocalSearchSaveService {
     @Transactional
     public void saveLocalSearch(LocalSearchesSaveDto localSearchesSaveDto) {
         String keyword = localSearchesSaveDto.getKeyword();
-        List<LocalSearch> transients = Streams.ofNullable(localSearchesSaveDto.getItems())
+        List<LocalSearch> localSearches = Streams.ofNullable(localSearchesSaveDto.getItems())
                 .map(i -> toDomain(keyword, i))
                 .collect(Collectors.toList());
 
         List<LocalSearch> persists = new ArrayList<>();
         List<LocalSearch> manages = localSearchRepository.findLocalSearchByKeyword(keyword);
-        for (LocalSearch trans : transients) {
+        if (CollectionUtils.isEmpty(manages)) {
+            localSearchRepository.saveAll(localSearches);
+            return;
+        }
+
+        for (LocalSearch trans : localSearches) {
             boolean isSimilar = false;
             for (LocalSearch manage : manages) {
                 if (analogyMeasurement.measureAnalogy(trans, manage)) {

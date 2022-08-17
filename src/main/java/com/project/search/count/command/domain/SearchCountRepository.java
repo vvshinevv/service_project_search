@@ -16,4 +16,6 @@ public interface SearchCountRepository extends JpaRepository<SearchCount, Long> 
     })
     @Query("select sc from SearchCount sc where sc.keyword = :keyword")
     Optional<SearchCount> findSearchCountForUpdate(String keyword);
+
+    Optional<SearchCount> findSearchCountByKeyword(String keyword);
 }

@@ -1,10 +1,9 @@
 package com.project.search.count.infra;
 
-import com.project.search.count.command.domain.SearchCountEvent;
 import com.project.search.count.command.application.SearchCountService;
-import org.springframework.scheduling.annotation.Async;
+import com.project.search.count.command.domain.SearchCountEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 public class SearchCountEventHandler {
@@ -14,8 +13,7 @@ public class SearchCountEventHandler {
         this.searchCountService = searchCountService;
     }
 
-    @Async
-    @TransactionalEventListener(classes = SearchCountEvent.class)
+    @EventListener(classes = SearchCountEvent.class)
     public void handler(SearchCountEvent searchCountEvent) {
         searchCountService.updateSearchCount(searchCountEvent.getKeyword());
     }

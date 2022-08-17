@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Slf4j
-@Component
+@Component(value = "ETRIAnalogyMeasurement")
 public class ETRIAnalogyMeasurement implements AnalogyMeasurement {
     private final ETRIAnalogyClient etriAnalogyClient;
     private final String restApiKey;

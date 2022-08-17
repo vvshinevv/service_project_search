@@ -18,6 +18,7 @@ import com.project.search.local.domain.comparator.ScoreComparator;
 import com.project.search.local.domain.comparator.SearchTypeComparator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class LocalSearchService {
 
     public LocalSearchService(
             List<LocalSearchFinder> localSearchFinders,
-            @Qualifier("simpleAnalogyMeasurement") AnalogyMeasurement analogyMeasurement,
+            @Qualifier("ETRIAnalogyMeasurement") AnalogyMeasurement analogyMeasurement,
             LocalSearchRepository localSearchRepository
     ) {
         this.localSearchFinders = localSearchFinders;
@@ -38,6 +39,7 @@ public class LocalSearchService {
         this.localSearchRepository = localSearchRepository;
     }
 
+    @Transactional
     public LocalSearchesSummary searchLocalByKeywordWithFailover(final String keyword) {
         try {
             return searchLocalByKeyword(keyword);
@@ -50,6 +52,7 @@ public class LocalSearchService {
         }
     }
 
+    @Transactional
     public LocalSearchesSummary searchLocalByKeyword(final String keyword) {
         // 카카오 네이버 오픈 API를 통해 데이터를 가져옴
         List<LocalSearchContainer> collect = localSearchFinders.stream()
