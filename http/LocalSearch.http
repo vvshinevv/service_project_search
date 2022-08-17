@@ -1,0 +1,5 @@
+### 지역 키워드 검색
+GET http://localhost:8080/local/search?keyword=네이버
+
+### 키워드 검색 TOP 10
+GET http://localhost:8080/search/count
