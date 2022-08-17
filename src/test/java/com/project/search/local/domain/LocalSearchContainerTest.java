@@ -43,18 +43,7 @@ public class LocalSearchContainerTest {
     @Test
     void 유사도_측정_이후_유사하다면_문서의_점수_증가_테스트() {
         // given
-        LocalSearch 카카오_검색1 = LocalSearchFixture.카카오_아지트_카카오_결과1(); // 네이버 결과 1과 유사
-        LocalSearch 카카오_검색2 = LocalSearchFixture.카카오_아지트_카카오_결과2(); // 네이버 결과 4와 유사
-        LocalSearch 카카오_검색3 = LocalSearchFixture.카카오_아지트_카카오_결과3();
-        LocalSearch 카카오_검색4 = LocalSearchFixture.카카오_아지트_카카오_결과4();
-        LocalSearch 카카오_검색5 = LocalSearchFixture.카카오_아지트_카카오_결과5(); // 네이버 결과 3과 유사
-        LocalSearch 카카오_검색6 = LocalSearchFixture.카카오_아지트_카카오_결과6();
-        LocalSearch 카카오_검색7 = LocalSearchFixture.카카오_아지트_카카오_결과7();
-        LocalSearch 카카오_검색8 = LocalSearchFixture.카카오_아지트_카카오_결과8(); // 네이버 결과 2와 유사
-        LocalSearch 카카오_검색9 = LocalSearchFixture.카카오_아지트_카카오_결과9();
-        LocalSearch 카카오_검색10 = LocalSearchFixture.카카오_아지트_카카오_결과10();
-        List<LocalSearch> 카카오_검색_결과들 = Arrays.asList(카카오_검색1, 카카오_검색2, 카카오_검색3, 카카오_검색4, 카카오_검색5, 카카오_검색6, 카카오_검색7, 카카오_검색8, 카카오_검색9, 카카오_검색10);
-        LocalSearchContainer 카카오_검색_결과_컨테이너 = new LocalSearchContainer(SearchType.KAKAO, 카카오_검색_결과들, 1, 10, false);
+        LocalSearchContainer 카카오_검색_결과_컨테이너 = LocalSearchFixture.카카오_검색_컨테이너();
 
         LocalSearch 네이버_검색1 = LocalSearchFixture.카카오_아지트_네이버_결과1();
         LocalSearch 네이버_검색2 = LocalSearchFixture.카카오_아지트_네이버_결과2();
@@ -62,7 +51,6 @@ public class LocalSearchContainerTest {
         LocalSearch 네이버_검색4 = LocalSearchFixture.카카오_아지트_네이버_결과4();
         LocalSearch 네이버_검색5 = LocalSearchFixture.카카오_아지트_네이버_결과5();
         List<LocalSearch> 네이버_검색_결과들 = Arrays.asList(네이버_검색1, 네이버_검색2, 네이버_검색3, 네이버_검색4, 네이버_검색5);
-
 
         // when
         카카오_검색_결과_컨테이너.decideScoreWithAnalogyMeasurement(네이버_검색_결과들, new TestAnalogyMeasurement());
@@ -84,18 +72,7 @@ public class LocalSearchContainerTest {
     @Test
     void 유사성이_없는_문서_찾아내는_테스트() {
         // given
-        LocalSearch 카카오_검색1 = LocalSearchFixture.카카오_아지트_카카오_결과1(); // 네이버 결과 1과 유사
-        LocalSearch 카카오_검색2 = LocalSearchFixture.카카오_아지트_카카오_결과2(); // 네이버 결과 4와 유사
-        LocalSearch 카카오_검색3 = LocalSearchFixture.카카오_아지트_카카오_결과3();
-        LocalSearch 카카오_검색4 = LocalSearchFixture.카카오_아지트_카카오_결과4();
-        LocalSearch 카카오_검색5 = LocalSearchFixture.카카오_아지트_카카오_결과5(); // 네이버 결과 3과 유사
-        LocalSearch 카카오_검색6 = LocalSearchFixture.카카오_아지트_카카오_결과6();
-        LocalSearch 카카오_검색7 = LocalSearchFixture.카카오_아지트_카카오_결과7();
-        LocalSearch 카카오_검색8 = LocalSearchFixture.카카오_아지트_카카오_결과8(); // 네이버 결과 2와 유사
-        LocalSearch 카카오_검색9 = LocalSearchFixture.카카오_아지트_카카오_결과9();
-        LocalSearch 카카오_검색10 = LocalSearchFixture.카카오_아지트_카카오_결과10();
-        List<LocalSearch> 카카오_검색_결과들 = Arrays.asList(카카오_검색1, 카카오_검색2, 카카오_검색3, 카카오_검색4, 카카오_검색5, 카카오_검색6, 카카오_검색7, 카카오_검색8, 카카오_검색9, 카카오_검색10);
-        LocalSearchContainer 카카오_검색_결과_컨테이너 = new LocalSearchContainer(SearchType.KAKAO, 카카오_검색_결과들, 1, 10, false);
+        LocalSearchContainer 카카오_검색_결과_컨테이너 = LocalSearchFixture.카카오_검색_컨테이너();
 
         LocalSearch 네이버_검색1 = LocalSearchFixture.카카오_아지트_네이버_결과1(); // 유사하므로 제외 대상
         LocalSearch 네이버_검색2 = LocalSearchFixture.카카오_아지트_네이버_결과2(); // 유사하므로 제외 대상
