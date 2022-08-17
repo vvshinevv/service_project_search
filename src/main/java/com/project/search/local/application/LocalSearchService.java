@@ -18,7 +18,6 @@ import com.project.search.local.domain.comparator.ScoreComparator;
 import com.project.search.local.domain.comparator.SearchTypeComparator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +38,6 @@ public class LocalSearchService {
         this.localSearchRepository = localSearchRepository;
     }
 
-    @Transactional
     public LocalSearchesSummary searchLocalByKeywordWithFailover(final String keyword) {
         try {
             return searchLocalByKeyword(keyword);

@@ -19,6 +19,11 @@ public class WebMvcConfig {
         return new RestTemplate(clientHttpRequestFactory());
     }
 
+    @Bean
+    public RestTemplate etriRestTemplate() {
+        return new RestTemplate(clientHttpRequestFactory());
+    }
+
     private ClientHttpRequestFactory clientHttpRequestFactory() {
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         factory.setConnectTimeout(10000);
